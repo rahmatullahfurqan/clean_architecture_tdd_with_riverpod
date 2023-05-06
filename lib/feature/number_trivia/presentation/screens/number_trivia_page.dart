@@ -20,6 +20,7 @@ class NumberTrivaPage extends HookConsumerWidget {
         GetRandomNumberTriviaParams(context: context)));
     final numberTrivia = ref.watch(currentNumberTriviaProvider);
     final getConcreateSearch = useState("");
+    final textEditingController = useTextEditingController();
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -82,10 +83,10 @@ class NumberTrivaPage extends HookConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                   DefaultSearchBoxWidget(
-                    hint: "Cari",
+                    hint: "Tulis Angka",
+                    textEditingController: textEditingController,
                     textInputType: TextInputType.number,
                     action: (value) {
-                      print("onchanged");
                       getConcreateSearch.value = value;
                     },
                   ),
@@ -106,8 +107,7 @@ class NumberTrivaPage extends HookConsumerWidget {
                     Expanded(
                         child: ElevatedButton(
                       onPressed: () {
-                        print(getConcreateSearch.value);
-                        if (int.tryParse(getConcreateSearch.value) == null) {
+                        if (int.tryParse(textEditingController.text) == null) {
                           return ErrorMessageNotification.localHandler(
                               context, "Hanya Dapat Memasukkan Angka");
                         }
@@ -118,7 +118,9 @@ class NumberTrivaPage extends HookConsumerWidget {
                         ref.read(getConcreateNumberTriviaProvider(
                             GetConcreateNumberTriviaParams(
                                 context: context,
-                                number: int.parse(getConcreateSearch.value))));
+                                number:
+                                    int.parse(textEditingController.text))));
+                        textEditingController.text = "";
                       },
                       style: Theme.of(context)
                           .elevatedButtonTheme
@@ -137,6 +139,7 @@ class NumberTrivaPage extends HookConsumerWidget {
                     Expanded(
                         child: ElevatedButton(
                             onPressed: () {
+                              textEditingController.text = "";
                               ref
                                   .read(currentNumberTriviaProvider.notifier)
                                   .setNumberTrivia(

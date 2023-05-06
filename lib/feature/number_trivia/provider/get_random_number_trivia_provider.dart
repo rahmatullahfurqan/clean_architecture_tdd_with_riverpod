@@ -9,6 +9,7 @@ import '../../../core/error/messages.dart';
 import '../../../core/platform/sources.dart';
 import '../../../core/platform/templates.dart';
 import '../../../core/provider/dio.dart';
+import '../data/source/number_trivia_local_source.dart';
 
 final getRandomNumberTriviaProvider = Provider.autoDispose.family(
   (ref, GetRandomNumberTriviaParams params) async {
@@ -20,6 +21,12 @@ final getRandomNumberTriviaProvider = Provider.autoDispose.family(
             (ref) => GetRandomNumberTriviaSource(
               dio: ref.watch(dioProvider),
             ),
+          ),
+        ),
+        localDataSource: ref.watch(
+          Provider.autoDispose<
+              LocalDataSource<NumberTrivia, NumberTriviaModel>>(
+            (ref) => SetNumberTriviaLocalSource(),
           ),
         ),
         networkInfo: ref.watch(networkProvider),

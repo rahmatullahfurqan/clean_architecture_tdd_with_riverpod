@@ -1,6 +1,6 @@
 import 'package:flutter_tdd_with_riverpod/core/provider/network.dart';
 import 'package:flutter_tdd_with_riverpod/feature/number_trivia/data/models/number_trivia_model.dart';
-import 'package:flutter_tdd_with_riverpod/feature/number_trivia/data/source/set_number_trivia_local_source.dart';
+import 'package:flutter_tdd_with_riverpod/feature/number_trivia/data/source/number_trivia_local_source.dart';
 import 'package:flutter_tdd_with_riverpod/feature/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter_tdd_with_riverpod/feature/number_trivia/provider/number_trivia_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,6 +21,12 @@ final getConcreateNumberTriviaProvider = Provider.autoDispose.family(
             (ref) => GetConcreateNumberTriviaSource(
               dio: ref.watch(dioProvider),
             ),
+          ),
+        ),
+        localDataSource: ref.watch(
+          Provider.autoDispose<
+              LocalDataSource<NumberTrivia, NumberTriviaModel>>(
+            (ref) => SetNumberTriviaLocalSource(),
           ),
         ),
         networkInfo: ref.watch(networkProvider),

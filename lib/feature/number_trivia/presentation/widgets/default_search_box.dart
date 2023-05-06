@@ -12,6 +12,7 @@ class DefaultSearchBoxWidget extends HookWidget {
   final double borderWidth;
   final Function(String value) action;
   final TextInputType? textInputType;
+  final TextEditingController? textEditingController;
 
   const DefaultSearchBoxWidget({
     super.key,
@@ -19,13 +20,13 @@ class DefaultSearchBoxWidget extends HookWidget {
     this.textInputType,
     this.backgroundColor,
     this.borderColor,
+    this.textEditingController,
     this.borderWidth = 1,
     required this.action,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textEditingController = useTextEditingController();
     final focusNode = useFocusNode();
 
     return TextFormField(

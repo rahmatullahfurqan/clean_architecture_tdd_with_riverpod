@@ -30,7 +30,8 @@ abstract class RemoteDataSource<T, Params> {
 }
 
 abstract class LocalDataSource<T, Params> {
-  Future<T> call(Params params);
+  Future<T> set(Params params);
+  Future<T> get(Params params);
 }
 
 abstract class Repository<T, Params> {
